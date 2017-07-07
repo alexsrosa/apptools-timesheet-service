@@ -1,0 +1,18 @@
+*.class
+
+#folders#
+/target
+/src/main/webapp/WEB-INF/classes
+/src/main/resources/application.properties
+.settings
+
+# Packaged files #
+*.jar
+*.war
+*.ear
+.DS_Store
+.apt_generated
+.classpath
+.project
+.factorypath
+

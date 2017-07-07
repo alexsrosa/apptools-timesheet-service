@@ -18,11 +18,11 @@ import br.com.tools.timesheet.domain.ViewTimeSheet;
 public class ViewTimeSheetRepositoryTest {
 
 	@Autowired
-	private ViewTimeSheetRepository viewTimeSheetRepository;
+	private ViewTimeSheetRepository repository;
 
 	@Test
 	public void testFetchAll() {
-		Iterable<ViewTimeSheet> timeSheets = viewTimeSheetRepository.findAll();
+		Iterable<ViewTimeSheet> timeSheets = repository.findAll();
 
 		int count = 0;
 		Boolean b = false;
@@ -43,7 +43,7 @@ public class ViewTimeSheetRepositoryTest {
 
 	@Test
 	public void testFetchMatricula() {
-		List<ViewTimeSheet> viewTimeSheet = viewTimeSheetRepository.findByMatricula("00445");
+		List<ViewTimeSheet> viewTimeSheet = repository.findByMatricula("00445");
 
 		int count = 0;
 		Boolean b = false;
@@ -62,7 +62,7 @@ public class ViewTimeSheetRepositoryTest {
 
 	@Test
 	public void testFetchTarefa() {
-		List<ViewTimeSheet> viewTimeSheet = viewTimeSheetRepository.findByTarefa("995894");
+		List<ViewTimeSheet> viewTimeSheet = repository.findByTarefa("995894");
 
 		int count = 0;
 		Boolean b = false;
@@ -81,7 +81,7 @@ public class ViewTimeSheetRepositoryTest {
 
 	@Test
 	public void testCountRegisters() {
-		long count = viewTimeSheetRepository.count();
+		long count = repository.count();
 
 		System.out.println("#testCountRegisters -- Total de registros encontrados: " + count);
 
@@ -95,7 +95,7 @@ public class ViewTimeSheetRepositoryTest {
 	@Test
 	public void testFetchByData() {
 
-		List<ViewTimeSheet> viewTimeSheet = viewTimeSheetRepository.findByData("2017-06-01", "2017-06-30");
+		List<ViewTimeSheet> viewTimeSheet = repository.findByData("2017-06-01", "2017-06-30");
 
 		int count = 0;
 		Boolean b = false;
@@ -115,7 +115,7 @@ public class ViewTimeSheetRepositoryTest {
 	@Test
 	public void testFetchByDataWithTarefa() {
 		
-		List<ViewTimeSheet> viewTimeSheet = viewTimeSheetRepository.findByDataWithTarefa("2017-06-01", "2017-06-30", "995894");
+		List<ViewTimeSheet> viewTimeSheet = repository.findByDataWithTarefa("2017-06-01", "2017-06-30", "995894");
 		
 		int count = 0;
 		Boolean b = false;
