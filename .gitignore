@@ -3,8 +3,10 @@
 #folders#
 /target
 /src/main/webapp/WEB-INF/classes
-/src/main/resources/application.properties
+**/application.properties
+
 .settings
+
 
 # Packaged files #
 *.jar
