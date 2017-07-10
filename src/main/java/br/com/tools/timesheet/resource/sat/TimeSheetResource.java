@@ -1,4 +1,4 @@
-package br.com.tools.timesheet.resource;
+package br.com.tools.timesheet.resource.sat;
 
 import java.util.List;
 
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.tools.timesheet.domain.ViewTimeSheet;
-import br.com.tools.timesheet.service.ViewTimeSheetService;
+import br.com.tools.timesheet.domain.sat.ViewTimeSheet;
+import br.com.tools.timesheet.service.sat.ViewTimeSheetService;
 
 @RestController
 @RequestMapping(value = "/timesheets")
