@@ -1,4 +1,4 @@
-package br.com.tools.timesheet.domain;
+package br.com.tools.timesheet.domain.sat;
 
 import java.util.Date;
 

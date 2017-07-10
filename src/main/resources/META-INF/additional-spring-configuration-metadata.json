@@ -1,0 +1,42 @@
+{"properties": [
+  {
+    "name": "spring.sqlserver.sat.datasource.jdbc-url",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.sqlserver.sat.datasource.jdbc-url'"
+  },
+  {
+    "name": "spring.sqlserver.sat.datasource.username",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.sqlserver.sat.datasource.username'"
+  },
+  {
+    "name": "spring.sqlserver.sat.datasource.password",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.sqlserver.sat.datasource.password'"
+  },
+  {
+    "name": "spring.sqlserver.sat.datasource.driverClassName",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.sqlserver.sat.datasource.driverClassName'"
+  },
+  {
+    "name": "spring.oracle.sgd.datasource.jdbc-url",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.oracle.sgd.datasource.jdbc-url'"
+  },
+  {
+    "name": "spring.oracle.sgd.datasource.username",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.oracle.sgd.datasource.username'"
+  },
+  {
+    "name": "spring.oracle.sgd.datasource.password",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.oracle.sgd.datasource.password'"
+  },
+  {
+    "name": "spring.oracle.sgd.datasource.driverClassName",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.oracle.sgd.datasource.driverClassName'"
+  }
+]}

@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import br.com.tools.timesheet.domain.ViewTimeSheet;
+import br.com.tools.timesheet.domain.sat.ViewTimeSheet;
+import br.com.tools.timesheet.service.sat.ViewTimeSheetService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
