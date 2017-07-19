@@ -16,17 +16,43 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class TimeSheetResourceTest {
-	
-    @Autowired
-    private MockMvc mockMvc;
-    
-    @Test
-    public void timeSheetWithMatriculaValida() throws Exception {
-    	this.mockMvc.perform(get("/timesheets/matricula/00445"))
-    				.andDo(print())
-    				.andExpect(status().isOk());
-    }
-    
-    ///timesheets/periodo/2017-06-01/2017-06-05
 
+	@Autowired
+	private MockMvc mockMvc;
+
+	@Test
+	public void timeSheetByMatriculaValida() throws Exception {
+		this.mockMvc.perform(get("/timesheets/matricula/00445")).andDo(print()).andExpect(status().isOk());
+	}
+	
+	@Test
+	public void timeSheetByMatriculaError() throws Exception {
+		this.mockMvc.perform(get("/timesheets/matricula")).andDo(print()).andExpect(status().isNotFound());
+	}
+
+	@Test
+	public void timeSheetByMatriculaWithPeriodoValido() throws Exception {
+		this.mockMvc.perform(get("/timesheets/matricula/00445/periodo/2017-05-01/2017-05-31")).andDo(print()).andExpect(status().isOk());
+	}
+	
+	@Test
+	public void timeSheetByMatriculaWithPeriodoError1() throws Exception {
+		this.mockMvc.perform(get("/timesheets/matricula/00445/periodo/2017-05-01")).andDo(print()).andExpect(status().isNotFound());
+	}
+	
+	@Test
+	public void timeSheetByMatriculaWithPeriodoError2() throws Exception {
+		this.mockMvc.perform(get("/timesheets/matricula/periodo/2017-05-01")).andDo(print()).andExpect(status().isNotFound());
+	}
+	
+	
+	@Test
+	public void timeSheetByTarefaValida() throws Exception {
+		this.mockMvc.perform(get("/timesheets/tarefa/995894")).andDo(print()).andExpect(status().isOk());
+	}
+	
+	@Test
+	public void timeSheetByTarefaError() throws Exception {
+		this.mockMvc.perform(get("/timesheets/tarefa")).andDo(print()).andExpect(status().isNotFound());
+	}
 }
