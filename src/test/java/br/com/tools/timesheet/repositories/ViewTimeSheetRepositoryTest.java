@@ -116,7 +116,7 @@ public class ViewTimeSheetRepositoryTest {
 	@Test
 	public void testFetchByDataWithTarefa() {
 		
-		List<ViewTimeSheet> viewTimeSheet = repository.findByDataWithTarefa("2017-06-01", "2017-06-30", "995894");
+		List<ViewTimeSheet> viewTimeSheet = repository.findByTarefaWithPeriodo("995894", "2017-06-01", "2017-06-30");
 		
 		int count = 0;
 		Boolean b = false;
