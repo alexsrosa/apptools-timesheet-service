@@ -1,12 +1,11 @@
-package br.com.tools.timesheet.repositories.sat;
+package br.com.tools.timesheet.repository.sat;
 
-import java.util.List;
-
+import br.com.tools.timesheet.domain.sat.ViewTimeSheet;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 
-import br.com.tools.timesheet.domain.sat.ViewTimeSheet;
+import java.util.List;
 
 public interface ViewTimeSheetRepository extends Repository<ViewTimeSheet, Integer> {
 

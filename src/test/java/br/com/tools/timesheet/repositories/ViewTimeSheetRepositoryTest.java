@@ -1,18 +1,17 @@
 package br.com.tools.timesheet.repositories;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.Iterator;
-import java.util.List;
-
+import br.com.tools.timesheet.domain.sat.ViewTimeSheet;
+import br.com.tools.timesheet.repository.sat.ViewTimeSheetRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import br.com.tools.timesheet.domain.sat.ViewTimeSheet;
-import br.com.tools.timesheet.repositories.sat.ViewTimeSheetRepository;
+import java.util.Iterator;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

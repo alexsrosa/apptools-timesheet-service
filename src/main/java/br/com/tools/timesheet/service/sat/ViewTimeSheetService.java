@@ -1,12 +1,11 @@
 package br.com.tools.timesheet.service.sat;
 
-import java.util.List;
-
+import br.com.tools.timesheet.domain.sat.ViewTimeSheet;
+import br.com.tools.timesheet.repository.sat.ViewTimeSheetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.tools.timesheet.domain.sat.ViewTimeSheet;
-import br.com.tools.timesheet.repositories.sat.ViewTimeSheetRepository;
+import java.util.List;
 
 @Service
 public class ViewTimeSheetService {

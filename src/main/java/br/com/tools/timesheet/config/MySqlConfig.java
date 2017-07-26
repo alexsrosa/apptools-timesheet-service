@@ -1,14 +1,6 @@
 package br.com.tools.timesheet.config;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.stream.Collectors;
-
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-
+import br.com.tools.timesheet.domain.manager.TimeSheet;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -25,36 +17,40 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import br.com.tools.timesheet.domain.sat.ViewTimeSheet;
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import java.util.stream.Collectors;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(entityManagerFactoryRef = "sqlServerEntityManager",
-					  transactionManagerRef = "sqlServerTransactionManager",
-					  basePackages = "br.com.tools.timesheet.repository.sat")
-public class SqlServerConfig {
+@EnableJpaRepositories(entityManagerFactoryRef = "mySqlEntityManager",
+					  transactionManagerRef = "mySqlTransactionManager",
+					  basePackages = "br.com.tools.timesheet.repository.manager")
+public class MySqlConfig {
 
-	@Primary
 	@Bean
-	@ConfigurationProperties("spring.sqlserver.sat.datasource")
-	public DataSource sqlServerDataSource() {
+	@ConfigurationProperties("spring.mysql.datasource")
+	public DataSource mySqlDataSource() {
 		return DataSourceBuilder.create().build();
 	}
 
-	@Primary
-	@Bean(name = "sqlServerEntityManager")
-	public LocalContainerEntityManagerFactoryBean sqlServerEntityManagerFactory(EntityManagerFactoryBuilder builder) {
-		return builder.dataSource(sqlServerDataSource())
+	@Bean(name = "mySqlEntityManager")
+	public LocalContainerEntityManagerFactoryBean mySqlEntityManagerFactory(EntityManagerFactoryBuilder builder) {
+		return builder.dataSource(mySqlDataSource())
 					.properties(hibernateProperties())
-					.packages(ViewTimeSheet.class)
-					.persistenceUnit("sqlServerSatPU")
+					.packages(TimeSheet.class)
+					.persistenceUnit("mySqlPU")
 					.build();
 	}
 
-	@Primary
-	@Bean(name = "sqlServerTransactionManager")
-	public PlatformTransactionManager sqlServerTransactionManager(
-			@Qualifier("sqlServerEntityManager") EntityManagerFactory entityManagerFactory) {
+
+	@Bean(name = "mySqlTransactionManager")
+	public PlatformTransactionManager mySqlTransactionManager(
+			@Qualifier("mySqlEntityManager") EntityManagerFactory entityManagerFactory) {
 		return new JpaTransactionManager(entityManagerFactory);
 	}
 
@@ -65,7 +61,7 @@ public class SqlServerConfig {
 		try {
 			Properties properties = PropertiesLoaderUtils.loadProperties(resource);
 
-			properties.setProperty("hibernate.dialect", "org.hibernate.dialect.SQLServerDialect");
+			properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
 
 			return properties.entrySet().stream()
 					.collect(Collectors.toMap(e -> e.getKey().toString(), e -> e.getValue()));

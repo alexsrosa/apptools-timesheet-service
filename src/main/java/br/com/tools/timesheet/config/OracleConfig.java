@@ -26,20 +26,20 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import br.com.tools.timesheet.domain.sat.ViewTimeSheet;
 
-@Configuration
+/*@Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(entityManagerFactoryRef = "sgdEntityManager", 
 					  transactionManagerRef = "sgdTransactionManager", 
-					  basePackages = "br.com.tools.timesheet.repositories.sgd")
+					  basePackages = "br.com.tools.timesheet.repositories.sgd")*/
 public class OracleConfig {
 
-	@Bean
+	/*@Bean
 	@ConfigurationProperties("spring.oracle.sgd.datasource")
 	public DataSource oracleDataSource() {
 		return DataSourceBuilder.create().build();
 	}
 
-	@Bean(name = "sgdEntityManager")
+	//@Bean(name = "sgdEntityManager")
 	public LocalContainerEntityManagerFactoryBean oracleEntityManagerFactory(EntityManagerFactoryBuilder builder) {
 		return builder.dataSource(oracleDataSource())
 					.properties(hibernateProperties())
@@ -48,7 +48,7 @@ public class OracleConfig {
 					.build();
 	}
 
-	@Bean(name = "sgdTransactionManager")
+	//@Bean(name = "sgdTransactionManager")
 	public PlatformTransactionManager oracleTransactionManager(
 			@Qualifier("sgdEntityManager") EntityManagerFactory entityManagerFactory) {
 		return new JpaTransactionManager(entityManagerFactory);
@@ -66,5 +66,5 @@ public class OracleConfig {
 		} catch (IOException e) {
 			return new HashMap();
 		}
-	}
+	}*/
 }
