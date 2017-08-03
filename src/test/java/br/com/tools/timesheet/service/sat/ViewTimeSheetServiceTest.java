@@ -1,4 +1,4 @@
-package br.com.tools.timesheet.service;
+package br.com.tools.timesheet.service.sat;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,13 +15,13 @@ import br.com.tools.timesheet.service.sat.ViewTimeSheetService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TimeSheetServiceTest {
+public class ViewTimeSheetServiceTest {
 	
 	@Autowired
 	private ViewTimeSheetService service;
 	
 	@Test
-	public void testFetchTarefa() {
+	public void findByTarefa() {
 		List<ViewTimeSheet> viewTimeSheet = service.findByTarefa("995894");
 
 		int count = 0;
@@ -40,7 +40,7 @@ public class TimeSheetServiceTest {
 	}
 	
 	@Test
-	public void testFetchMatricula() {
+	public void findByMatricula() {
 		List<ViewTimeSheet> viewTimeSheet = service.findByMatricula("00445");
 
 		int count = 0;
@@ -60,7 +60,7 @@ public class TimeSheetServiceTest {
 	
 
 	@Test
-	public void testFetchByData() {
+	public void findByData() {
 
 		List<ViewTimeSheet> viewTimeSheet = service.findByData("2017-06-01", "2017-06-30");
 
@@ -77,6 +77,24 @@ public class TimeSheetServiceTest {
 		}
 
 		assertEquals(true, b);
+	}
+
+	@Test
+	public void findAll(){
+		Iterable<ViewTimeSheet> all = this.service.findAll();
+
+		all.forEach(timesheet -> System.out.println(timesheet.toString()));
+
+		assertEquals(true, true);
+	}
+
+	@Test
+	public void count(){
+		long count = this.service.count();
+
+		System.out.println("Contador de registros: " + count);
+
+		assertEquals(true, (count > 1000));
 	}
 
 }

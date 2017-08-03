@@ -2,12 +2,14 @@ package br.com.tools.timesheet.repository.sat;
 
 import br.com.tools.timesheet.domain.sat.ViewTimeSheet;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface ViewTimeSheetRepository extends Repository<ViewTimeSheet, Integer> {
+@Repository
+public interface ViewTimeSheetRepository extends CrudRepository<ViewTimeSheet, Integer> {
 
 	Iterable<ViewTimeSheet> findAll();
 

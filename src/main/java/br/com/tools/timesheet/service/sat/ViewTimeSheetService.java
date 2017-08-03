@@ -34,4 +34,11 @@ public class ViewTimeSheetService {
 		return this.repository.findByData(data1, data2);
 	}
 
+	public Iterable<ViewTimeSheet> findAll() {
+		return this.repository.findAll();
+	}
+
+	public long count(){
+		return this.repository.count();
+	}
 }

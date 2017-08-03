@@ -1,5 +1,6 @@
 package br.com.tools.timesheet.domain.sat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -33,7 +34,7 @@ public class ViewTimeSheet {
 	private String desAtividade;
 	
 	@Column(name="dt_timesheet")
-	private Date data;
+	private LocalDate data;
 	
 	private String observacao;
 	
@@ -159,14 +160,14 @@ public class ViewTimeSheet {
 	/**
 	 * @return the data
 	 */
-	public Date getData() {
+	public LocalDate getData() {
 		return data;
 	}
 
 	/**
 	 * @param data the data to set
 	 */
-	public void setData(Date data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 

@@ -32,12 +32,14 @@ import java.util.stream.Collectors;
 					  basePackages = "br.com.tools.timesheet.repository.manager")
 public class MySqlConfig {
 
+	@Primary
 	@Bean
-	@ConfigurationProperties("spring.mysql.datasource")
+	@ConfigurationProperties("spring.datasource")
 	public DataSource mySqlDataSource() {
 		return DataSourceBuilder.create().build();
 	}
 
+	@Primary
 	@Bean(name = "mySqlEntityManager")
 	public LocalContainerEntityManagerFactoryBean mySqlEntityManagerFactory(EntityManagerFactoryBuilder builder) {
 		return builder.dataSource(mySqlDataSource())
@@ -47,7 +49,7 @@ public class MySqlConfig {
 					.build();
 	}
 
-
+	@Primary
 	@Bean(name = "mySqlTransactionManager")
 	public PlatformTransactionManager mySqlTransactionManager(
 			@Qualifier("mySqlEntityManager") EntityManagerFactory entityManagerFactory) {
@@ -60,8 +62,6 @@ public class MySqlConfig {
 
 		try {
 			Properties properties = PropertiesLoaderUtils.loadProperties(resource);
-
-			properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
 
 			return properties.entrySet().stream()
 					.collect(Collectors.toMap(e -> e.getKey().toString(), e -> e.getValue()));

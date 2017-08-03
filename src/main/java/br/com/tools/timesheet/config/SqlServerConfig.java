@@ -34,14 +34,12 @@ import br.com.tools.timesheet.domain.sat.ViewTimeSheet;
 					  basePackages = "br.com.tools.timesheet.repository.sat")
 public class SqlServerConfig {
 
-	@Primary
 	@Bean
 	@ConfigurationProperties("spring.sqlserver.sat.datasource")
 	public DataSource sqlServerDataSource() {
 		return DataSourceBuilder.create().build();
 	}
 
-	@Primary
 	@Bean(name = "sqlServerEntityManager")
 	public LocalContainerEntityManagerFactoryBean sqlServerEntityManagerFactory(EntityManagerFactoryBuilder builder) {
 		return builder.dataSource(sqlServerDataSource())
@@ -51,7 +49,6 @@ public class SqlServerConfig {
 					.build();
 	}
 
-	@Primary
 	@Bean(name = "sqlServerTransactionManager")
 	public PlatformTransactionManager sqlServerTransactionManager(
 			@Qualifier("sqlServerEntityManager") EntityManagerFactory entityManagerFactory) {
@@ -64,8 +61,6 @@ public class SqlServerConfig {
 
 		try {
 			Properties properties = PropertiesLoaderUtils.loadProperties(resource);
-
-			properties.setProperty("hibernate.dialect", "org.hibernate.dialect.SQLServerDialect");
 
 			return properties.entrySet().stream()
 					.collect(Collectors.toMap(e -> e.getKey().toString(), e -> e.getValue()));
