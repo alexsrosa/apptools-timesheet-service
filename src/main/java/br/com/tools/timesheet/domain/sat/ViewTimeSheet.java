@@ -34,7 +34,7 @@ public class ViewTimeSheet {
 	private String desAtividade;
 	
 	@Column(name="dt_timesheet")
-	private LocalDate data;
+	private String data;
 	
 	private String observacao;
 	
@@ -160,14 +160,14 @@ public class ViewTimeSheet {
 	/**
 	 * @return the data
 	 */
-	public LocalDate getData() {
+	public String getData() {
 		return data;
 	}
 
 	/**
 	 * @param data the data to set
 	 */
-	public void setData(LocalDate data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 

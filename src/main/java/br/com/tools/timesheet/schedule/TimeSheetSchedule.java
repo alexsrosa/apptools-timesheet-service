@@ -44,10 +44,11 @@ public class TimeSheetSchedule {
         Parametro dias_atualizacao = this.paramentroService.findByNome("DIAS_ATUALIZACAO_VIEW_TIMESHEET");
         Parametro atualiza_tudo = this.paramentroService.findByNome("ATUALIZA_TUDO_TIMESHEET");
 
-        Iterable<ViewTimeSheet> timeSheetsList;
+        Iterable<ViewTimeSheet> viewTimeSheet;
 
         if(atualiza_tudo.getValor().equals("TRUE")){
-            timeSheetsList = viewTimeSheetService.findAll();
+//            viewTimeSheet = viewTimeSheetService.findAll();
+            viewTimeSheet = viewTimeSheetService.findByMatricula("00445");
         }else{
             LocalDate end = LocalDate.now();
             LocalDate start = end.minusDays(Long.parseLong(dias_atualizacao.getValor()));
@@ -55,44 +56,35 @@ public class TimeSheetSchedule {
             String dataInicio = start.getYear()+"-"+start.getMonthValue()+"-"+start.getDayOfMonth();
             String dataFim = end.getYear()+"-"+end.getMonthValue()+"-"+end.getDayOfMonth();
 
-            timeSheetsList = viewTimeSheetService.findByData(dataInicio, dataFim);
+            viewTimeSheet = viewTimeSheetService.findByData(dataInicio, dataFim);
         }
 
         TimeSheet timeSheet;
- /*       List<TimeSheet> returnTimeSheet;
+        List<TimeSheet> baseTimeSheet;
 
-        for (ViewTimeSheet viewTimeSheet : timeSheetsList) {
+        for (ViewTimeSheet view : viewTimeSheet) {
 
             timeSheet = new TimeSheet();
-            this.monta(timeSheet, viewTimeSheet);
+            this.monta(timeSheet, view);
 
             //verificar se existe na base
-            returnTimeSheet = this.timeSheetService.findByMatriculaAndTarefaAndCodigofaseAndCodigoatividadeAndData(timeSheet);
+            baseTimeSheet = this.timeSheetService.findByMatriculaAndTarefaAndCodigofaseAndCodigoatividadeAndData(timeSheet);
 
-            if (returnTimeSheet.size() >= 1){
+            if (baseTimeSheet.size() > 0){
                 // se existe, verificar se alterou as horas
-                if(returnTimeSheet.get(1).getHoras().equals(timeSheet.getHoras())){
-                    // Se alterou as horas marcar para atualizar
-                }
+                baseTimeSheet.forEach(time ->{
+                    if(!time.getHoras().equals(view.getHoras())){
+                        // Se alterou as horas, atualiza registro
+                        log.info(":::::Alterando::::" +time.toString(), dateFormat.format(new Date()));
+                        this.timeSheetService.save(time);
+                    }
+                });
                 // Se não alterou as horas náo fazer nada
             }else{
                 // se não existe deve inserir
+                log.info(":::::Incluido::::" +timeSheet.toString(), dateFormat.format(new Date()));
+                this.timeSheetService.save(timeSheet);
             }
-
-           *//* if(returnTimeSheet.size() >= 1){
-                returnTimeSheet.forEach(time -> {
-                    this.remove(time);
-                });
-            }*//*
-        }*/
-
-        for (ViewTimeSheet viewTimeSheet : timeSheetsList) {
-
-            timeSheet = new TimeSheet();
-
-            this.monta(timeSheet, viewTimeSheet);
-
-            this.add(timeSheet);
         }
 
         log.info("<<<<<<<<Fim do processamento",dateFormat.format(new Date()));
@@ -107,7 +99,15 @@ public class TimeSheetSchedule {
         timeSheet.setDescricaofase(viewTimeSheet.getDesFase().trim());
         timeSheet.setCodigoatividade(Integer.parseInt(viewTimeSheet.getCodAtividade().trim()));
         timeSheet.setDescricaoatividade(viewTimeSheet.getDesAtividade().trim());
-        timeSheet.setData(viewTimeSheet.getData());
+
+        int ano = Integer.valueOf(viewTimeSheet.getData().substring(0,4));
+        int mes = Integer.valueOf(viewTimeSheet.getData().substring(5,7));
+        int dia = Integer.valueOf(viewTimeSheet.getData().substring(8,10));
+
+        log.info("Ano:"+ano+"-"+mes+"/"+dia );
+
+        LocalDate data = LocalDate.of(ano, mes, dia);
+        timeSheet.setData(data);
         timeSheet.setObservacao(viewTimeSheet.getObservacao().trim());
         timeSheet.setHoras(viewTimeSheet.getHoras().trim());
     }

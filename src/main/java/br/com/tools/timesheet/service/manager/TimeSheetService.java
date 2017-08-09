@@ -25,12 +25,6 @@ public class TimeSheetService {
     @Autowired
     private TimeSheetRepository repository;
 
-    /**
-     * Save a timeSheet.
-     *
-     * @param timeSheet the entity to save
-     * @return the persisted entity
-     */
     public TimeSheet save(TimeSheet timeSheet) {
         log.debug("Request to save TimeSheet : {}", timeSheet);
         TimeSheet result = this.repository.save(timeSheet);
