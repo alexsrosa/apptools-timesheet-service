@@ -42,10 +42,11 @@ public class TimeSheetService {
         return this.repository.findByData(data);
     }
 
-    public List<TimeSheet> findByMatriculaAndTarefaAndCodigofaseAndCodigoatividadeAndData(TimeSheet timeSheet){
-        log.debug("Request to findByMatriculaAndTarefaAndCodigofaseAndCodigoatividadeAndData TimeSheet : {}", timeSheet.toString());
-        return this.repository.findByMatriculaAndTarefaAndCodigofaseAndCodigoatividadeAndData(timeSheet.getMatricula()
-                ,timeSheet.getTarefa(),timeSheet.getCodigofase(),timeSheet.getCodigoatividade(),timeSheet.getData());
+    public List<TimeSheet> findByMatriculaAndTarefaAndCodigofaseAndCodigoatividadeAndDataAndObservacao(TimeSheet timeSheet){
+        log.debug("Request to findByMatriculaAndTarefaAndCodigofaseAndCodigoatividadeAndDataAndObservacao TimeSheet : {}", timeSheet.toString());
+        return this.repository.findByMatriculaAndTarefaAndCodigofaseAndCodigoatividadeAndDataAndObservacao(timeSheet.getMatricula()
+                ,timeSheet.getTarefa(),timeSheet.getCodigofase(),timeSheet.getCodigoatividade(),timeSheet.getData()
+                ,timeSheet.getObservacao());
     }
 
     public void deleteById(Long id){

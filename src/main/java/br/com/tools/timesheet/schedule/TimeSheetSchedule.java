@@ -17,8 +17,6 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-import static java.lang.Boolean.*;
-
 @Component
 public class TimeSheetSchedule {
 
@@ -35,20 +33,26 @@ public class TimeSheetSchedule {
     @Autowired
     private ParametroService paramentroService;
 
+    private int alterados = 0;
+    private int inseridos = 0;
+
     @Scheduled(fixedRate = 500000)
     public void atualizaTimeSheet(){
 
         log.info(">>>>>>>>>>>>Inicio do processamento",dateFormat.format(new Date()));
 
+        long tempoInicial = System.currentTimeMillis();
+        this.alterados = 0;
+        this.inseridos = 0;
+
         // Busca parametros
         Parametro dias_atualizacao = this.paramentroService.findByNome("DIAS_ATUALIZACAO_VIEW_TIMESHEET");
         Parametro atualiza_tudo = this.paramentroService.findByNome("ATUALIZA_TUDO_TIMESHEET");
 
-        Iterable<ViewTimeSheet> viewTimeSheet;
+        List<ViewTimeSheet> viewTimeSheet;
 
         if(atualiza_tudo.getValor().equals("TRUE")){
-//            viewTimeSheet = viewTimeSheetService.findAll();
-            viewTimeSheet = viewTimeSheetService.findByMatricula("00445");
+            viewTimeSheet = viewTimeSheetService.findAll();
         }else{
             LocalDate end = LocalDate.now();
             LocalDate start = end.minusDays(Long.parseLong(dias_atualizacao.getValor()));
@@ -56,7 +60,7 @@ public class TimeSheetSchedule {
             String dataInicio = start.getYear()+"-"+start.getMonthValue()+"-"+start.getDayOfMonth();
             String dataFim = end.getYear()+"-"+end.getMonthValue()+"-"+end.getDayOfMonth();
 
-            viewTimeSheet = viewTimeSheetService.findByData(dataInicio, dataFim);
+            viewTimeSheet = viewTimeSheetService.findByDataByDataAsc(dataInicio, dataFim);
         }
 
         TimeSheet timeSheet;
@@ -68,7 +72,7 @@ public class TimeSheetSchedule {
             this.monta(timeSheet, view);
 
             //verificar se existe na base
-            baseTimeSheet = this.timeSheetService.findByMatriculaAndTarefaAndCodigofaseAndCodigoatividadeAndData(timeSheet);
+            baseTimeSheet = this.timeSheetService.findByMatriculaAndTarefaAndCodigofaseAndCodigoatividadeAndDataAndObservacao(timeSheet);
 
             if (baseTimeSheet.size() > 0){
                 // se existe, verificar se alterou as horas
@@ -77,6 +81,7 @@ public class TimeSheetSchedule {
                         // Se alterou as horas, atualiza registro
                         log.info(":::::Alterando::::" +time.toString(), dateFormat.format(new Date()));
                         this.timeSheetService.save(time);
+                        this.alterados++;
                     }
                 });
                 // Se não alterou as horas náo fazer nada
@@ -84,10 +89,16 @@ public class TimeSheetSchedule {
                 // se não existe deve inserir
                 log.info(":::::Incluido::::" +timeSheet.toString(), dateFormat.format(new Date()));
                 this.timeSheetService.save(timeSheet);
+                inseridos++;
             }
         }
 
-        log.info("<<<<<<<<Fim do processamento",dateFormat.format(new Date()));
+        long tempoFinal = System.currentTimeMillis();
+
+        log.info("Tempo de processamento: [" + (tempoFinal - tempoInicial) / 1000d + "]",dateFormat.format(new Date()));
+        log.info("Registros Alterados: [" + this.alterados + "]",dateFormat.format(new Date()));
+        log.info("Registros Inseridos: [" + this.inseridos + "]",dateFormat.format(new Date()));
+        log.info("<<<<<<<<Fim do processamento" ,dateFormat.format(new Date()));
     }
 
     private void monta(TimeSheet timeSheet, ViewTimeSheet viewTimeSheet) {
@@ -99,26 +110,8 @@ public class TimeSheetSchedule {
         timeSheet.setDescricaofase(viewTimeSheet.getDesFase().trim());
         timeSheet.setCodigoatividade(Integer.parseInt(viewTimeSheet.getCodAtividade().trim()));
         timeSheet.setDescricaoatividade(viewTimeSheet.getDesAtividade().trim());
-
-        int ano = Integer.valueOf(viewTimeSheet.getData().substring(0,4));
-        int mes = Integer.valueOf(viewTimeSheet.getData().substring(5,7));
-        int dia = Integer.valueOf(viewTimeSheet.getData().substring(8,10));
-
-        log.info("Ano:"+ano+"-"+mes+"/"+dia );
-
-        LocalDate data = LocalDate.of(ano, mes, dia);
-        timeSheet.setData(data);
+        timeSheet.setData(viewTimeSheet.getData());
         timeSheet.setObservacao(viewTimeSheet.getObservacao().trim());
         timeSheet.setHoras(viewTimeSheet.getHoras().trim());
-    }
-
-    private void remove(TimeSheet timeSheet){
-        log.info(":::::Removido::::" + timeSheet.toString(),dateFormat.format(new Date()));
-        timeSheetService.deleteById(timeSheet.getId());
-    }
-
-    private void add(TimeSheet timeSheet){
-        log.info(":::::Incluido::::" +timeSheet.toString(), dateFormat.format(new Date()));
-        timeSheetService.save(timeSheet);
     }
 }

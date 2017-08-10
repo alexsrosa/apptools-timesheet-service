@@ -3,39 +3,41 @@ package br.com.tools.timesheet.domain.sat;
 import java.time.LocalDate;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Entity
+@Entity @IdClass(ViewTimeSheetId.class)
 @Table(name="SAT_VIEW_POA")
 public class ViewTimeSheet {
-	
+
 	@Id
 	private String matricula;
-	
+
 	private String nome;
-	
+
+	@Id
 	private String tarefa;
 	
 	private String descricao;
 	
 	@Column(name="cod_fase")
+	@Id
 	private String codFase;
 	
 	@Column(name="des_fase")
 	private String desFase;
 	
 	@Column(name="cod_atividade")
+	@Id
 	private String codAtividade;
 
 	@Column(name="des_atividade")
 	private String desAtividade;
 	
 	@Column(name="dt_timesheet")
-	private String data;
-	
+	@Id
+	private LocalDate data;
+
+	@Id
 	private String observacao;
 	
 	private String horas;
@@ -160,14 +162,14 @@ public class ViewTimeSheet {
 	/**
 	 * @return the data
 	 */
-	public String getData() {
+	public LocalDate getData() {
 		return data;
 	}
 
 	/**
 	 * @param data the data to set
 	 */
-	public void setData(String data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 

@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface TimeSheetRepository extends CrudRepository<TimeSheet,Integer> {
 
-    List<TimeSheet> findByMatriculaAndTarefaAndCodigofaseAndCodigoatividadeAndData(Integer matricula,Integer tarefa,Integer codigofase,Integer codigoatividade,LocalDate data);
+    List<TimeSheet> findByMatriculaAndTarefaAndCodigofaseAndCodigoatividadeAndDataAndObservacao(Integer matricula,Integer tarefa,Integer codigofase,Integer codigoatividade,LocalDate data, String observacao);
     List<TimeSheet> findByData(LocalDate data);
     void deleteById(Long id);
 }

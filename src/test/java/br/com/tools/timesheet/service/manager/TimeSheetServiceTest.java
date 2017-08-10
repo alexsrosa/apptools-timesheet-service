@@ -51,7 +51,7 @@ public class TimeSheetServiceTest {
         timeSheet.setData(LocalDate.of(2017,06,01));
 
 
-        List<TimeSheet> timeSheets = service.findByMatriculaAndTarefaAndCodigofaseAndCodigoatividadeAndData(timeSheet);
+        List<TimeSheet> timeSheets = service.findByMatriculaAndTarefaAndCodigofaseAndCodigoatividadeAndDataAndObservacao(timeSheet);
 
         int count = 0;
         String name = "";
