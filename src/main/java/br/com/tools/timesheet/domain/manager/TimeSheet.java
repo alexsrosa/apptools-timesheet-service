@@ -6,7 +6,6 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
-
 /**
  * A TimeSheet.
  */
@@ -59,8 +58,17 @@ public class TimeSheet implements Serializable {
     @Column(name = "observacao")
     private String observacao;
 
-    @Column(name = "horas")
+    @NotNull
+    @Column(name = "horas", nullable = false)
     private String horas;
+
+    @NotNull
+    @Column(name = "datainclusao", nullable = false)
+    private LocalDate datainclusao;
+
+    @NotNull
+    @Column(name = "dataultimaatualizacao", nullable = false)
+    private LocalDate dataultimaatualizacao;
 
     public Long getId() {
         return id;
@@ -213,6 +221,32 @@ public class TimeSheet implements Serializable {
         this.horas = horas;
     }
 
+    public LocalDate getDatainclusao() {
+        return datainclusao;
+    }
+
+    public TimeSheet datainclusao(LocalDate datainclusao) {
+        this.datainclusao = datainclusao;
+        return this;
+    }
+
+    public void setDatainclusao(LocalDate datainclusao) {
+        this.datainclusao = datainclusao;
+    }
+
+    public LocalDate getDataultimaatualizacao() {
+        return dataultimaatualizacao;
+    }
+
+    public TimeSheet dataultimaatualizacao(LocalDate dataultimaatualizacao) {
+        this.dataultimaatualizacao = dataultimaatualizacao;
+        return this;
+    }
+
+    public void setDataultimaatualizacao(LocalDate dataultimaatualizacao) {
+        this.dataultimaatualizacao = dataultimaatualizacao;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -248,6 +282,8 @@ public class TimeSheet implements Serializable {
                 ", data='" + getData() + "'" +
                 ", observacao='" + getObservacao() + "'" +
                 ", horas='" + getHoras() + "'" +
+                ", datainclusao='" + getDatainclusao() + "'" +
+                ", dataultimaatualizacao='" + getDataultimaatualizacao() + "'" +
                 "}";
     }
 }

@@ -3,6 +3,7 @@ package br.com.tools.timesheet.domain.manager;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -25,6 +26,14 @@ public class Parametro implements Serializable {
     @NotNull
     @Column(name = "valor", nullable = false)
     private String valor;
+
+    @NotNull
+    @Column(name = "datainclusao", nullable = false)
+    private LocalDate datainclusao;
+
+    @NotNull
+    @Column(name = "dataultimaatualizacao", nullable = false)
+    private LocalDate dataultimaatualizacao;
 
     public Long getId() {
         return id;
@@ -60,6 +69,32 @@ public class Parametro implements Serializable {
         this.valor = valor;
     }
 
+    public LocalDate getDatainclusao() {
+        return datainclusao;
+    }
+
+    public Parametro datainclusao(LocalDate datainclusao) {
+        this.datainclusao = datainclusao;
+        return this;
+    }
+
+    public void setDatainclusao(LocalDate datainclusao) {
+        this.datainclusao = datainclusao;
+    }
+
+    public LocalDate getDataultimaatualizacao() {
+        return dataultimaatualizacao;
+    }
+
+    public Parametro dataultimaatualizacao(LocalDate dataultimaatualizacao) {
+        this.dataultimaatualizacao = dataultimaatualizacao;
+        return this;
+    }
+
+    public void setDataultimaatualizacao(LocalDate dataultimaatualizacao) {
+        this.dataultimaatualizacao = dataultimaatualizacao;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -86,6 +121,8 @@ public class Parametro implements Serializable {
                 "id=" + getId() +
                 ", nome='" + getNome() + "'" +
                 ", valor='" + getValor() + "'" +
+                ", datainclusao='" + getDatainclusao() + "'" +
+                ", dataultimaatualizacao='" + getDataultimaatualizacao() + "'" +
                 "}";
     }
 }

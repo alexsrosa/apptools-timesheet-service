@@ -51,11 +51,17 @@ public class TimeSheetSchedule {
 
         List<ViewTimeSheet> viewTimeSheet;
 
-        if(atualiza_tudo.getValor().equals("TRUE")){
+        if(atualiza_tudo == null || atualiza_tudo.getValor().equals("TRUE")){
             viewTimeSheet = viewTimeSheetService.findAll();
         }else{
+
+            String dias = "60";
+            if (dias_atualizacao != null && dias_atualizacao.getValor() != null){
+                dias = dias_atualizacao.getValor();
+            }
+
             LocalDate end = LocalDate.now();
-            LocalDate start = end.minusDays(Long.parseLong(dias_atualizacao.getValor()));
+            LocalDate start = end.minusDays(Long.parseLong(dias));
 
             String dataInicio = start.getYear()+"-"+start.getMonthValue()+"-"+start.getDayOfMonth();
             String dataFim = end.getYear()+"-"+end.getMonthValue()+"-"+end.getDayOfMonth();
@@ -80,6 +86,8 @@ public class TimeSheetSchedule {
                     if(!time.getHoras().equals(view.getHoras())){
                         // Se alterou as horas, atualiza registro
                         log.info(":::::Alterando::::" +time.toString(), dateFormat.format(new Date()));
+                        time.setHoras(view.getHoras());
+                        time.setDataultimaatualizacao(LocalDate.now());
                         this.timeSheetService.save(time);
                         this.alterados++;
                     }
@@ -88,6 +96,7 @@ public class TimeSheetSchedule {
             }else{
                 // se não existe deve inserir
                 log.info(":::::Incluido::::" +timeSheet.toString(), dateFormat.format(new Date()));
+                timeSheet.setDatainclusao(LocalDate.now());
                 this.timeSheetService.save(timeSheet);
                 inseridos++;
             }
@@ -113,5 +122,6 @@ public class TimeSheetSchedule {
         timeSheet.setData(viewTimeSheet.getData());
         timeSheet.setObservacao(viewTimeSheet.getObservacao().trim());
         timeSheet.setHoras(viewTimeSheet.getHoras().trim());
+        timeSheet.setDataultimaatualizacao(LocalDate.now());
     }
 }
