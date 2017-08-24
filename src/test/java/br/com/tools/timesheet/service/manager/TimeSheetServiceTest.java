@@ -1,6 +1,7 @@
 package br.com.tools.timesheet.service.manager;
 
 
+import br.com.tools.timesheet.domain.manager.Consultor;
 import br.com.tools.timesheet.domain.manager.TimeSheet;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -84,7 +85,8 @@ public class TimeSheetServiceTest {
 
         Optional<TimeSheet> t = service.findById(Long.parseLong("4"));
 
-        assertEquals(false, t.isPresent());
+        assertEquals(
+                false, t.isPresent());
     }
 
     @Test
@@ -93,5 +95,19 @@ public class TimeSheetServiceTest {
         Optional<TimeSheet> t = service.findById(Long.parseLong("4"));
 
         assertEquals(true, t.isPresent());
+    }
+
+    @Test
+    public void findByConsultores(){
+
+        List<Consultor> allConsultores = service.findAllConsultores();
+
+        for (Consultor consultor: allConsultores) {
+
+            System.out.println(consultor.toString());
+        }
+
+        assertEquals(true, allConsultores.size() > 0);
+
     }
 }

@@ -36,7 +36,7 @@ public class TimeSheetSchedule {
     private int alterados = 0;
     private int inseridos = 0;
 
-    @Scheduled(fixedRate = 500000)
+    //@Scheduled(fixedRate = 500000)
     public void atualizaTimeSheet(){
 
         log.info(">>>>>>>>>>>>Inicio do processamento",dateFormat.format(new Date()));
