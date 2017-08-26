@@ -1,17 +1,19 @@
 package br.com.tools.timesheet.domain.manager;
 
 
+import br.com.tools.timesheet.domain.manager.enumeration.ConsultorStatus;
+
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
 /**
- * A Consultores.
+ * A Consultor.
  */
 @Entity
-@Table(name = "consultores")
+@Table(name = "consultor")
 public class Consultor implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,6 +32,11 @@ public class Consultor implements Serializable {
     @NotNull
     @Column(name = "dataultimoregistro", nullable = false)
     private LocalDate dataultimoregistro;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "flativo", nullable = false)
+    private ConsultorStatus flativo;
 
     public Long getId() {
         return id;
@@ -78,6 +85,19 @@ public class Consultor implements Serializable {
         this.dataultimoregistro = dataultimoregistro;
     }
 
+    public ConsultorStatus getFlativo() {
+        return flativo;
+    }
+
+    public Consultor flativo(ConsultorStatus flativo) {
+        this.flativo = flativo;
+        return this;
+    }
+
+    public void setFlativo(ConsultorStatus flativo) {
+        this.flativo = flativo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -86,11 +106,11 @@ public class Consultor implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Consultor consultores = (Consultor) o;
-        if (consultores.getId() == null || getId() == null) {
+        Consultor consultor = (Consultor) o;
+        if (consultor.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), consultores.getId());
+        return Objects.equals(getId(), consultor.getId());
     }
 
     @Override
@@ -100,11 +120,12 @@ public class Consultor implements Serializable {
 
     @Override
     public String toString() {
-        return "Consultores{" +
+        return "Consultor{" +
                 "id=" + getId() +
                 ", nome='" + getNome() + "'" +
                 ", dataprimeiroregistro='" + getDataprimeiroregistro() + "'" +
                 ", dataultimoregistro='" + getDataultimoregistro() + "'" +
+                ", flativo='" + getFlativo() + "'" +
                 "}";
     }
 }

@@ -18,11 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class TimeSheetSchedule {
-
-    private static final Logger log = LoggerFactory.getLogger(TimeSheetSchedule.class);
-
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+public class TimeSheetSchedule extends ScheduleLog{
 
     @Autowired
     private ViewTimeSheetService viewTimeSheetService;
@@ -33,17 +29,10 @@ public class TimeSheetSchedule {
     @Autowired
     private ParametroService paramentroService;
 
-    private int alterados = 0;
-    private int inseridos = 0;
-
-    //@Scheduled(fixedRate = 500000)
+    @Scheduled(fixedRate = 500000)
     public void atualizaTimeSheet(){
 
-        log.info(">>>>>>>>>>>>Inicio do processamento",dateFormat.format(new Date()));
-
-        long tempoInicial = System.currentTimeMillis();
-        this.alterados = 0;
-        this.inseridos = 0;
+        this.startLog(LoggerFactory.getLogger(TimeSheetSchedule.class));
 
         // Busca parametros
         Parametro dias_atualizacao = this.paramentroService.findByNome("DIAS_ATUALIZACAO_VIEW_TIMESHEET");
@@ -85,29 +74,21 @@ public class TimeSheetSchedule {
                 baseTimeSheet.forEach(time ->{
                     if(!time.getHoras().equals(view.getHoras())){
                         // Se alterou as horas, atualiza registro
-                        log.info(":::::Alterando::::" +time.toString(), dateFormat.format(new Date()));
                         time.setHoras(view.getHoras());
                         time.setDataultimaatualizacao(LocalDate.now());
                         this.timeSheetService.save(time);
-                        this.alterados++;
+                        this.addAlterados();
                     }
                 });
                 // Se não alterou as horas náo fazer nada
             }else{
                 // se não existe deve inserir
-                log.info(":::::Incluido::::" +timeSheet.toString(), dateFormat.format(new Date()));
                 timeSheet.setDatainclusao(LocalDate.now());
                 this.timeSheetService.save(timeSheet);
-                inseridos++;
+                this.addInseridos();
             }
         }
-
-        long tempoFinal = System.currentTimeMillis();
-
-        log.info("Tempo de processamento: [" + (tempoFinal - tempoInicial) / 1000d + "]",dateFormat.format(new Date()));
-        log.info("Registros Alterados: [" + this.alterados + "]",dateFormat.format(new Date()));
-        log.info("Registros Inseridos: [" + this.inseridos + "]",dateFormat.format(new Date()));
-        log.info("<<<<<<<<Fim do processamento" ,dateFormat.format(new Date()));
+        this.finishLog();
     }
 
     private void monta(TimeSheet timeSheet, ViewTimeSheet viewTimeSheet) {

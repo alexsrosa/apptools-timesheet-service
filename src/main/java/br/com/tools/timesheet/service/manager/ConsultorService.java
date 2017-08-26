@@ -1,7 +1,7 @@
 package br.com.tools.timesheet.service.manager;
 
 import br.com.tools.timesheet.domain.manager.Consultor;
-import br.com.tools.timesheet.repository.manager.ConsultoresRepository;
+import br.com.tools.timesheet.repository.manager.ConsultorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,15 +13,15 @@ import java.util.Optional;
 public class ConsultorService {
 
     @Autowired
-    private ConsultoresRepository repository;
+    private ConsultorRepository repository;
 
     /**
      *
-     * @param consultores
+     * @param consultor
      * @return
      */
-    public Consultor save(Consultor consultores){
-        return this.repository.save(consultores);
+    public Consultor save(Consultor consultor){
+        return this.repository.save(consultor);
     }
 
     /**

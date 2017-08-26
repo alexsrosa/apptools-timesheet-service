@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  * Spring Data JPA repository for the Consultores entity.
  */
 @Repository
-public interface ConsultoresRepository extends JpaRepository<Consultor,Long> {
+public interface ConsultorRepository extends JpaRepository<Consultor,Long> {
 
 }
