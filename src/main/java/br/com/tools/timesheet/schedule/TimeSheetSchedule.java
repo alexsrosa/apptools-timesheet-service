@@ -34,29 +34,7 @@ public class TimeSheetSchedule extends ScheduleLog{
 
         this.startLog(LoggerFactory.getLogger(TimeSheetSchedule.class));
 
-        // Busca parametros
-        Parametro dias_atualizacao = this.paramentroService.findByNome("DIAS_ATUALIZACAO_VIEW_TIMESHEET");
-        Parametro atualiza_tudo = this.paramentroService.findByNome("ATUALIZA_TUDO_TIMESHEET");
-
-        List<ViewTimeSheet> viewTimeSheet;
-
-        if(atualiza_tudo == null || atualiza_tudo.getValor().equals("TRUE")){
-            viewTimeSheet = viewTimeSheetService.findAll();
-        }else{
-
-            String dias = "60";
-            if (dias_atualizacao != null && dias_atualizacao.getValor() != null){
-                dias = dias_atualizacao.getValor();
-            }
-
-            LocalDate end = LocalDate.now();
-            LocalDate start = end.minusDays(Long.parseLong(dias));
-
-            String dataInicio = start.getYear()+"-"+start.getMonthValue()+"-"+start.getDayOfMonth();
-            String dataFim = end.getYear()+"-"+end.getMonthValue()+"-"+end.getDayOfMonth();
-
-            viewTimeSheet = viewTimeSheetService.findByDataByDataAsc(dataInicio, dataFim);
-        }
+        List<ViewTimeSheet> viewTimeSheet = getViewTimeSheets();
 
         TimeSheet timeSheet;
         List<TimeSheet> baseTimeSheet;
@@ -89,6 +67,33 @@ public class TimeSheetSchedule extends ScheduleLog{
             }
         }
         this.finishLog();
+    }
+
+    private List<ViewTimeSheet> getViewTimeSheets() {
+        // Busca parametros
+        Parametro dias_atualizacao = this.paramentroService.findByNome("DIAS_ATUALIZACAO_VIEW_TIMESHEET");
+        Parametro atualiza_tudo = this.paramentroService.findByNome("ATUALIZA_TUDO_TIMESHEET");
+
+        List<ViewTimeSheet> viewTimeSheet;
+
+        if(atualiza_tudo == null || atualiza_tudo.getValor().equals("TRUE")){
+            viewTimeSheet = viewTimeSheetService.findAll();
+        }else{
+
+            String dias = "60";
+            if (dias_atualizacao != null && dias_atualizacao.getValor() != null){
+                dias = dias_atualizacao.getValor();
+            }
+
+            LocalDate end = LocalDate.now();
+            LocalDate start = end.minusDays(Long.parseLong(dias));
+
+            String dataInicio = start.getYear()+"-"+start.getMonthValue()+"-"+start.getDayOfMonth();
+            String dataFim = end.getYear()+"-"+end.getMonthValue()+"-"+end.getDayOfMonth();
+
+            viewTimeSheet = viewTimeSheetService.findByDataByDataAsc(dataInicio, dataFim);
+        }
+        return viewTimeSheet;
     }
 
     private void monta(TimeSheet timeSheet, ViewTimeSheet viewTimeSheet) {

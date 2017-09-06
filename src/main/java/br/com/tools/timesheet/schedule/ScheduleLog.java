@@ -24,6 +24,9 @@ public abstract class ScheduleLog {
                 + (System.currentTimeMillis() - tempoInicial) / 1000d + "]"
                 + " Registros Alterados [" + this.alterados + "]"
                 + " Registros Inseridos ["+ this.inseridos + "]", dateFormat.format(new Date()));
+
+        alterados = 0;
+        inseridos = 0;
     }
 
     public void addAlterados(){
