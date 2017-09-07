@@ -22,7 +22,7 @@ public class ConsultorSchedule extends ScheduleLog{
     @Autowired
     private ConsultorService consultorService;
 
-    @Scheduled(fixedRate = 500000)
+    @Scheduled(fixedRate = 50000)
     public void atualizaConsultores(){
 
         this.startLog(LoggerFactory.getLogger(ConsultorSchedule.class));

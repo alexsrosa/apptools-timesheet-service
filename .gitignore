@@ -4,7 +4,7 @@
 /target
 /src/main/webapp/WEB-INF/classes
 **/application.properties
-
+/.idea/*
 .settings
 
 
@@ -17,4 +17,6 @@
 .classpath
 .project
 .factorypath
+
+.apt_generated
 

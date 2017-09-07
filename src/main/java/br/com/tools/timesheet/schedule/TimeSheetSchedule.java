@@ -3,6 +3,7 @@ package br.com.tools.timesheet.schedule;
 import br.com.tools.timesheet.domain.manager.Parametro;
 import br.com.tools.timesheet.domain.manager.TimeSheet;
 import br.com.tools.timesheet.domain.sat.ViewTimeSheet;
+import br.com.tools.timesheet.helpers.DataUtils;
 import br.com.tools.timesheet.service.manager.ParametroService;
 import br.com.tools.timesheet.service.manager.TimeSheetService;
 import br.com.tools.timesheet.service.sat.ViewTimeSheetService;
@@ -29,7 +30,7 @@ public class TimeSheetSchedule extends ScheduleLog{
     @Autowired
     private ParametroService paramentroService;
 
-    @Scheduled(fixedRate = 500000)
+    @Scheduled(fixedRate = 50000)
     public void atualizaTimeSheet(){
 
         this.startLog(LoggerFactory.getLogger(TimeSheetSchedule.class));
@@ -52,6 +53,7 @@ public class TimeSheetSchedule extends ScheduleLog{
                 baseTimeSheet.forEach(time ->{
                     if(!time.getHoras().equals(view.getHoras())){
                         // Se alterou as horas, atualiza registro
+                        time.setTempo_segundos(DataUtils.convertHorasMinutosSegundosInSegundos(view.getHoras()));
                         time.setHoras(view.getHoras());
                         time.setDataultimaatualizacao(LocalDate.now());
                         this.timeSheetService.save(time);
@@ -62,6 +64,7 @@ public class TimeSheetSchedule extends ScheduleLog{
             }else{
                 // se não existe deve inserir
                 timeSheet.setDatainclusao(LocalDate.now());
+                timeSheet.setTempo_segundos(DataUtils.convertHorasMinutosSegundosInSegundos(timeSheet.getHoras()));
                 this.timeSheetService.save(timeSheet);
                 this.addInseridos();
             }

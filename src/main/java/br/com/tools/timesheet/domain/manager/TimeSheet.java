@@ -70,6 +70,9 @@ public class TimeSheet implements Serializable {
     @Column(name = "dataultimaatualizacao", nullable = false)
     private LocalDate dataultimaatualizacao;
 
+    @Column(name = "tempo_segundos")
+    private Integer tempo_segundos;
+
     public Long getId() {
         return id;
     }
@@ -247,6 +250,21 @@ public class TimeSheet implements Serializable {
         this.dataultimaatualizacao = dataultimaatualizacao;
     }
 
+
+    public Integer getTempo_segundos() {
+        return tempo_segundos;
+    }
+
+    public TimeSheet tempo_segundos(Integer tempo_segundos) {
+        this.tempo_segundos = tempo_segundos;
+        return this;
+    }
+
+    public void setTempo_segundos(Integer tempo_segundos) {
+        this.tempo_segundos = tempo_segundos;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -284,6 +302,7 @@ public class TimeSheet implements Serializable {
                 ", horas='" + getHoras() + "'" +
                 ", datainclusao='" + getDatainclusao() + "'" +
                 ", dataultimaatualizacao='" + getDataultimaatualizacao() + "'" +
+                ", tempo_minutos='" + getTempo_segundos() + "'" +
                 "}";
     }
 }
