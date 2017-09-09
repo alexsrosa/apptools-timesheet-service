@@ -30,7 +30,7 @@ public class TimeSheetSchedule extends ScheduleLog{
     @Autowired
     private ParametroService paramentroService;
 
-    @Scheduled(fixedRate = 50000)
+    @Scheduled(fixedRate = 1000000)
     public void atualizaTimeSheet(){
 
         this.startLog(LoggerFactory.getLogger(TimeSheetSchedule.class));
